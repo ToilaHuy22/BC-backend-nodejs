@@ -16,6 +16,7 @@
   "author": "ToilaHuy22",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.9.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
