@@ -23,7 +23,22 @@ let getCRUD = (req, res) => {
 let postCRUD = async (req, res) => {
   let message = await CRUDService.createNewUser(req.body);
   console.log(message);
+  console.log(req.body);
   return res.send("post crud");
+};
+
+let displayGetCRUD = async (req, res) => {
+  let data = await CRUDService.getAllUser();
+  console.log(data);
+  return res.render("displayCRUD.ejs", {
+    dataTable: data,
+  });
+};
+
+let getEditCRUD = (req, res) => {
+  console.log(req.query.id);
+
+  return res.send("hello from edit page");
 };
 // object = {
 //     key: '',
@@ -35,4 +50,6 @@ module.exports = {
   getAboutPage: getAboutPage,
   getCRUD: getCRUD,
   postCRUD: postCRUD,
+  displayGetCRUD: displayGetCRUD,
+  getEditCRUD: getEditCRUD,
 };

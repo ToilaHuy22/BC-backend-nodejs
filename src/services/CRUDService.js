@@ -6,6 +6,7 @@ let createNewUser = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       let hashPasswordFromBcrypt = await hashUserPassword(data.password);
+      //creat sequelize user
       await db.User.create({
         email: data.email,
         password: hashPasswordFromBcrypt,
@@ -34,6 +35,18 @@ let hashUserPassword = (password) => {
   });
 };
 
+let getAllUser = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let users = db.User.findAll({ raw: true });
+      resolve(users);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   createNewUser: createNewUser,
+  getAllUser: getAllUser,
 };
