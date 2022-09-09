@@ -176,13 +176,13 @@ let bulkCreateSchedule = (data) => {
           raw: true,
         });
 
-        //convert date
-        if (existing && existing.length > 0) {
-          existing = existing.map((item) => {
-            item.date = new Date(item.date).getTime();
-            return item;
-          });
-        }
+        // //convert date
+        // if (existing && existing.length > 0) {
+        //   existing = existing.map((item) => {
+        //     item.date = new Date(item.date).getTime();
+        //     return item;
+        //   });
+        // }
 
         //compare different
         let toCreate = _.differenceWith(schedule, existing, (a, b) => {
