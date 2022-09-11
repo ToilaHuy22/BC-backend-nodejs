@@ -26,6 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Doctor_Infor",
+      //Bỏ định dạng thêm s số nhiều sau table
+      freezeTableName: true,
     }
   );
   return Doctor_Infor;
