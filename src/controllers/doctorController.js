@@ -1,4 +1,4 @@
-import doctorService from "../services/doctorService";
+import doctorService from '../services/doctorService';
 
 let getTopDoctorHome = async (req, res) => {
   let limit = req.query.limit;
@@ -10,7 +10,7 @@ let getTopDoctorHome = async (req, res) => {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage: "Error from server",
+      errMessage: 'Error from server',
     });
   }
 };
@@ -23,7 +23,7 @@ let getAllDoctors = async (req, res) => {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage: "Error from server",
+      errMessage: 'Error from server',
     });
   }
 };
@@ -36,7 +36,7 @@ let postInforDoctor = async (req, res) => {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage: "Error from server",
+      errMessage: 'Error from server',
     });
   }
 };
@@ -49,7 +49,7 @@ let getDetailDoctorById = async (req, res) => {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage: "Error from server",
+      errMessage: 'Error from server',
     });
   }
 };
@@ -62,23 +62,33 @@ let bulkCreateSchedule = async (req, res) => {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage: "Error from server",
+      errMessage: 'Error from server',
     });
   }
 };
 
 let getScheduleByDate = async (req, res) => {
   try {
-    let infor = await doctorService.getScheduleByDate(
-      req.query.doctorId,
-      req.query.date
-    );
+    let infor = await doctorService.getScheduleByDate(req.query.doctorId, req.query.date);
     return res.status(200).json(infor);
   } catch (e) {
     console.log(e);
     return res.status(200).json({
       errCode: -1,
-      errMessage: "Error from server",
+      errMessage: 'Error from server',
+    });
+  }
+};
+
+let getExtraInforDoctorById = async (req, res) => {
+  try {
+    let infor = await doctorService.getExtraInforDoctorById(req.query.doctorId);
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errCode: -1,
+      errMessage: 'Error from server',
     });
   }
 };
@@ -90,4 +100,5 @@ module.exports = {
   getDetailDoctorById: getDetailDoctorById,
   bulkCreateSchedule: bulkCreateSchedule,
   getScheduleByDate: getScheduleByDate,
+  getExtraInforDoctorById: getExtraInforDoctorById,
 };

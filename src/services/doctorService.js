@@ -1,6 +1,6 @@
-import db from "../models/index";
-require("dotenv").config();
-import _ from "lodash";
+import db from '../models/index';
+require('dotenv').config();
+import _ from 'lodash';
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
@@ -8,22 +8,22 @@ let getTopDoctorHome = (limitInput) => {
   return new Promise(async (resolve, reject) => {
     try {
       let users = await db.User.findAll({
-        where: { roleId: "R2" },
+        where: { roleId: 'R2' },
         limit: limitInput,
-        order: [["createdAt", "DESC"]],
+        order: [['createdAt', 'DESC']],
         attributes: {
-          exclude: ["password"],
+          exclude: ['password'],
         },
         include: [
           {
             model: db.Allcode,
-            as: "positionData",
-            attributes: ["valueEn", "valueVi"],
+            as: 'positionData',
+            attributes: ['valueEn', 'valueVi'],
           },
           {
             model: db.Allcode,
-            as: "genderData",
-            attributes: ["valueEn", "valueVi"],
+            as: 'genderData',
+            attributes: ['valueEn', 'valueVi'],
           },
         ],
         raw: true,
@@ -43,9 +43,9 @@ let getAllDoctors = () => {
   return new Promise(async (resolve, reject) => {
     try {
       let doctors = await db.User.findAll({
-        where: { roleId: "R2" },
+        where: { roleId: 'R2' },
         attributes: {
-          exclude: ["password", "image"],
+          exclude: ['password', 'image'],
         },
       });
 
@@ -76,19 +76,19 @@ let saveDetailInforDoctor = (inputData) => {
       ) {
         resolve({
           errCode: 1,
-          errMessage: "Missing required parameters",
+          errMessage: 'Missing required parameters',
         });
       } //update or create by action from React client
       else {
         //upsert to Markdown table
-        if (inputData.action === "CREATE") {
+        if (inputData.action === 'CREATE') {
           await db.Markdown.create({
             contentHTML: inputData.contentHTML,
             contentMarkdown: inputData.contentMarkdown,
             description: inputData.description,
             doctorId: inputData.doctorId,
           });
-        } else if (inputData.action === "EDIT") {
+        } else if (inputData.action === 'EDIT') {
           let doctorMarkdown = await db.Markdown.findOne({
             where: { doctorId: inputData.doctorId },
             raw: false,
@@ -139,7 +139,7 @@ let saveDetailInforDoctor = (inputData) => {
 
         resolve({
           errCode: 0,
-          errMessage: "Saved doctor information",
+          errMessage: 'Saved doctor information',
         });
       }
     } catch (e) {
@@ -154,7 +154,7 @@ let getDetailDoctorById = (inputId) => {
       if (!inputId) {
         resolve({
           errCode: 1,
-          errMessage: "Missing required parameters",
+          errMessage: 'Missing required parameters',
         });
       } else {
         let data = await db.User.findOne({
@@ -162,38 +162,38 @@ let getDetailDoctorById = (inputId) => {
             id: inputId,
           },
           attributes: {
-            exclude: ["password"],
+            exclude: ['password'],
           },
           include: [
             {
               model: db.Markdown,
-              attributes: ["description", "contentHTML", "contentMarkdown"],
+              attributes: ['description', 'contentHTML', 'contentMarkdown'],
             },
             {
               model: db.Allcode,
-              as: "positionData",
-              attributes: ["valueEn", "valueVi"],
+              as: 'positionData',
+              attributes: ['valueEn', 'valueVi'],
             },
             {
               model: db.Doctor_Infor,
               attributes: {
-                exclude: ["id", "doctorId"],
+                exclude: ['id', 'doctorId'],
               },
               include: [
                 {
                   model: db.Allcode,
-                  as: "priceTypeData",
-                  attributes: ["valueEn", "valueVi"],
+                  as: 'priceTypeData',
+                  attributes: ['valueEn', 'valueVi'],
                 },
                 {
                   model: db.Allcode,
-                  as: "paymentTypeData",
-                  attributes: ["valueEn", "valueVi"],
+                  as: 'paymentTypeData',
+                  attributes: ['valueEn', 'valueVi'],
                 },
                 {
                   model: db.Allcode,
-                  as: "provinceTypeData",
-                  attributes: ["valueEn", "valueVi"],
+                  as: 'provinceTypeData',
+                  attributes: ['valueEn', 'valueVi'],
                 },
               ],
             },
@@ -203,7 +203,7 @@ let getDetailDoctorById = (inputId) => {
         });
 
         if (data && data.image) {
-          data.image = new Buffer(data.image, "base64").toString("binary");
+          data.image = new Buffer(data.image, 'base64').toString('binary');
         }
         if (!data) data = {};
 
@@ -224,7 +224,7 @@ let bulkCreateSchedule = (data) => {
       if (!data.arrSchedule || !data.doctorId || !data.formattedDate) {
         resolve({
           errCode: 1,
-          errMessage: "Missing required parameters!",
+          errMessage: 'Missing required parameters!',
         });
       } else {
         let schedule = data.arrSchedule;
@@ -237,7 +237,7 @@ let bulkCreateSchedule = (data) => {
 
         let existing = await db.Schedule.findAll({
           where: { doctorId: data.doctorId, date: data.formattedDate },
-          attributes: ["timeType", "date", "doctorId", "maxNumber"],
+          attributes: ['timeType', 'date', 'doctorId', 'maxNumber'],
           raw: true,
         });
 
@@ -261,7 +261,7 @@ let bulkCreateSchedule = (data) => {
 
         resolve({
           errCode: 0,
-          errMessage: "Created",
+          errMessage: 'Created',
         });
       }
     } catch (e) {
@@ -276,7 +276,7 @@ let getScheduleByDate = (doctorId, date) => {
       if (!doctorId || !date) {
         resolve({
           errCode: 1,
-          errMessage: "Missing required parameters!",
+          errMessage: 'Missing required parameters!',
         });
       } else {
         let data = await db.Schedule.findAll({
@@ -287,8 +287,8 @@ let getScheduleByDate = (doctorId, date) => {
           include: [
             {
               model: db.Allcode,
-              as: "timeTypeData",
-              attributes: ["valueEn", "valueVi"],
+              as: 'timeTypeData',
+              attributes: ['valueEn', 'valueVi'],
             },
           ],
           raw: false,
@@ -307,6 +307,57 @@ let getScheduleByDate = (doctorId, date) => {
     }
   });
 };
+
+let getExtraInforDoctorById = (doctorId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!doctorId) {
+        resolve({
+          errCode: 1,
+          errMessage: 'Missing required parameters!',
+        });
+      } else {
+        let data = await db.Doctor_Infor.findOne({
+          where: {
+            doctorId: doctorId,
+          },
+          attributes: {
+            exclude: ['id', 'doctorId'],
+          },
+          include: [
+            {
+              model: db.Allcode,
+              as: 'priceTypeData',
+              attributes: ['valueEn', 'valueVi'],
+            },
+            {
+              model: db.Allcode,
+              as: 'paymentTypeData',
+              attributes: ['valueEn', 'valueVi'],
+            },
+            {
+              model: db.Allcode,
+              as: 'provinceTypeData',
+              attributes: ['valueEn', 'valueVi'],
+            },
+          ],
+          raw: false,
+          nest: true,
+        });
+        if (!data) {
+          data = {};
+        }
+        resolve({
+          errCode: 0,
+          data: data,
+        });
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -314,4 +365,5 @@ module.exports = {
   getDetailDoctorById: getDetailDoctorById,
   bulkCreateSchedule: bulkCreateSchedule,
   getScheduleByDate: getScheduleByDate,
+  getExtraInforDoctorById: getExtraInforDoctorById,
 };
