@@ -30,10 +30,10 @@ let getBodyHTMLEmail = (dataSend) => {
   <p>Hệ thống đặt lịch khám bệnh Bookingcare đã nhận được thông tin đặt lịch của bạn:</p>
   <br>
   <div>
-      <b>Thời gian: ${dataSend.time}</b>
+      <b>Thời gian:<br> ${dataSend.time}</b>
   </div>
   <div>
-      <b>Bác sĩ: ${dataSend.doctorName}</b>
+      <b>Bác sĩ chỉ định:<br> ${dataSend.doctorName}</b>
   </div>
   <p>Để xác nhận thông tin là đúng và giữ lịch hẹn, vui lòng chọn xác nhận:</p>
   <div>
@@ -53,10 +53,10 @@ let getBodyHTMLEmail = (dataSend) => {
     <p>Bookingcare system has received your booking information:</p>
     <br>
     <div>
-        <b>Time: ${dataSend.time}</b>
+        <b>Time:<br> ${dataSend.time}</br>
     </div>
     <div>
-        <b>Doctor: ${dataSend.doctorName}</b>
+        <b>Doctor:<br> ${dataSend.doctorName}</b>
     </div>
     <p>To confirm the information is correct and to keep the appointment, please select confirm:</p>
     <div>
