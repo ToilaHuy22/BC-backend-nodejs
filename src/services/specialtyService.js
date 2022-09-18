@@ -1,5 +1,4 @@
 import db from '../models/index';
-import emailService from '../services/emailService';
 
 let createSpecialty = (data) => {
   return new Promise(async (resolve, reject) => {
@@ -11,9 +10,9 @@ let createSpecialty = (data) => {
         });
       } else {
         await db.Specialty.create({
-          image: data.imageBase64,
           name: data.name,
-          descriptionHTMl: data.descriptionHTML,
+          image: data.imageBase64,
+          descriptionHTML: data.descriptionHTML,
           descriptionMarkdown: data.descriptionMarkdown,
         });
         resolve({
